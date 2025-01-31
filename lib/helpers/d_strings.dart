@@ -2,3 +2,8 @@
 
 const String s_database_name = "db_application.db";
 const String s_application_name = "__APP_NAME__";
+
+enum CWidgets {
+  main,
+  bundy
+}

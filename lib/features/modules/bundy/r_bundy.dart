@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:real_app/features/commons/c_modules.dart';
+import 'package:real_app/features/modules/bundy/a_bundy.dart';
+import 'package:real_app/features/modules/bundy/p_bundy.dart';
+import 'package:real_app/helpers/d_strings.dart';
+
+class BundyModule extends Modules {
+  @override
+  String get route => '/';
+  BundyModule(super.module);
+
+  @override
+  void registerDependencies() {
+    module.registerSingleton(() => BundyApi());
+  }
+
+  @override
+  Map<CWidgets, Widget> ui = {
+    CWidgets.bundy: const BundyUI()
+  };
+}

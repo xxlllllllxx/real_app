@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:real_app/features/router.dart';
+import 'package:real_app/features/cd_router.dart';
 import 'package:real_app/helpers/d_strings.dart';
 import 'package:real_app/r_local_storage.dart';
-import 'package:real_app/r_api.dart';
 import 'package:real_app/helpers/r_helper.dart';
-import 'package:real_app/r_providers.dart';
-import 'package:real_app/r_ui.dart';
+import 'package:real_app/r_modules.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerHelpers(locator);
-  await registerApis(locator);
-  await registerProviders(locator);
-  await registerUis(locator);
+  await registerModules(locator);
   HydratedBloc.storage = await loadStorage(locator);
   runApp(const MainApp());
 }

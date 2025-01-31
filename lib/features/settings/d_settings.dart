@@ -1,16 +1,20 @@
-part of '../helpers/r_helper.dart';
-
-var settings = throw UnimplementedError();
+part of './r_settings.dart';
 
 enum CSettings {
   databaseName,
   databasePath,
   databaseLink,
+
+  backendLink,
+  backendIsSecure,
+
+  serverLink,
+  serverHeaders,
 }
 
 extension CXSettings on CSettings {
   String get stringValue {
-    String? x = settings.getString(toString());
+    String? x = settings.read(toString()) as String?;
     if (x == null) {
       throw UnimplementedError("${toString()} not found.");
     } else {
@@ -18,12 +22,12 @@ extension CXSettings on CSettings {
     }
   }
 
-  Future<bool> setString(String value) {
-    return settings.setString(toString(), value);
+  Future<void> setString(String value) async {
+    await settings.write(toString(), value);
   }
 
   bool get boolValue {
-    bool? x = settings.getBool(toString());
+    bool? x = settings.read(toString()) as bool?;
     if (x == null) {
       throw UnimplementedError("${toString()} not found.");
     } else {
@@ -31,12 +35,12 @@ extension CXSettings on CSettings {
     }
   }
 
-  Future<bool> setBool(bool value) {
-    return settings.setBool(toString(), value);
+  Future<void> setBool(bool value) async {
+    await settings.write(toString(), value);
   }
 
   int get intValue {
-    int? x = settings.getInt(toString());
+    int? x = settings.read(toString()) as int?;
     if (x == null) {
       throw UnimplementedError("${toString()} not found.");
     } else {
@@ -44,33 +48,52 @@ extension CXSettings on CSettings {
     }
   }
 
-  Future<bool> setInt(int value) {
-    return settings.setInt(toString(), value);
+  Future<void> setInt(int value) async {
+    await settings.write(toString(), value);
   }
 
-  double get doubleValue {
-    double? x = settings.getDouble(toString());
-    if (x == null) {
+  List<T> listValue<T>() {
+    String? jsonString = settings.read(toString()) as String?;
+    if (jsonString == null) {
       throw UnimplementedError("${toString()} not found.");
     } else {
-      return x;
+      List<dynamic> jsonList = json.decode(jsonString);
+      return jsonList.cast<T>();
     }
   }
 
-  Future<bool> setDouble(double value) {
-    return settings.setDouble(toString(), value);
+  Future<void> setList<T>(List<T> value) async {
+    String jsonString = json.encode(value);
+    await settings.write(toString(), jsonString);
   }
 
-  List<String> get stringList {
-    List<String>? x = settings.getStringList(toString());
-    if (x == null) {
+  Serializable serializableValue() {
+    String? jsonString = settings.read(toString()) as String?;
+    if (jsonString == null) {
       throw UnimplementedError("${toString()} not found.");
     } else {
-      return x;
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+      return Serializable.fromJson(jsonMap);
     }
   }
 
-  Future<bool> setStringList(List<String> value) {
-    return settings.setStringList(toString(), value);
+  Future<void> setSerializableValue(Serializable value) async {
+    String jsonString = json.encode(value);
+    await settings.write(toString(), jsonString);
   }
+
+  Map<String, String> stringMapValue() {
+    String? jsonString = settings.read(toString()) as String?;
+    if (jsonString == null) {
+      throw UnimplementedError("${toString()} not found.");
+    } else {
+      return json.decode(jsonString) as Map<String, String>;
+    }
+  }
+}
+
+abstract class Serializable {
+  Map<String, dynamic> toJson();
+  factory Serializable.fromJson(Map<String, dynamic> json) =>
+      throw UnimplementedError("Needs to override fromJson");
 }
