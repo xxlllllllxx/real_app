@@ -1,57 +1,76 @@
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-GetIt locator = GetIt.instance;
-SharedPreferences preferences = EmptySharedPreference();
-Future<SharedPreferences> getPreference() =>
-    SharedPreferences.getInstance().then((e) => preferences = e);
-
-Future<void> registerHelpers(GetIt locator) async {
-  await getPreference();
-  return;
-}
+part of 'r_helper.dart';
 
 enum CPreferences {
-  dbLink,
+  databaseName,
+  databasePath,
+  databaseLink,
 }
 
 extension CXPreferences on CPreferences {
-  String? get stringValue => preferences.getString(toString());
+  String get stringValue {
+    String? x = preferences.getString(toString());
+    if(x == null) {
+      throw UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
   
   Future<bool> setString(String value) {
     return preferences.setString(toString(), value);
   }
 
-  bool? get boolValue => preferences.getBool(toString());
+  bool get boolValue {
+    bool? x = preferences.getBool(toString());
+    if(x == null) {
+      throw UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
 
   Future<bool> setBool(bool value) {
     return preferences.setBool(toString(), value);
   }
 
-  int? get intValue => preferences.getInt(toString());
+  int get intValue {
+    int? x = preferences.getInt(toString());
+    if(x == null) {
+      throw UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
 
   Future<bool> setInt(int value) {
     return preferences.setInt(toString(), value);
   }
 
-  double? get doubleValue => preferences.getDouble(toString());
+  double get doubleValue {
+    double? x = preferences.getDouble(toString());
+    if(x == null) {
+      throw UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
 
   Future<bool> setDouble(double value) {
     return preferences.setDouble(toString(), value);
   }
 
-  List<String>? get stringList => preferences.getStringList(toString());
+  List<String> get stringList {
+    List<String>? x = preferences.getStringList(toString());
+    if(x == null) {
+      throw UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
 
   Future<bool> setStringList(List<String> value) {
     return preferences.setStringList(toString(), value);
   }
-}
-
-enum LogType {
-  info,
-  warning,
-  error,
-  
 }
 
 class EmptySharedPreference implements SharedPreferences {
