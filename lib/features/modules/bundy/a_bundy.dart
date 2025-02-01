@@ -1,7 +1,16 @@
-import 'package:real_app/features/commons/a_http.dart';
+import 'package:real_app/helpers/a_http.dart';
+import 'package:real_app/features/modules/bundy/d_bundy.dart';
+import 'package:real_app/helpers/f_extensions.dart';
 
 class BundyApi extends ApiBase {
   BundyApi();
-  
-  
+
+  Future<Bundy> postBundy() async {
+    final response = await post(
+      endpoint: "/bundy",
+      params: {},
+    );
+    validateResponse(response);
+    return response.body.toObject<Bundy>();
+  }
 }

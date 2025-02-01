@@ -16,7 +16,7 @@ extension CXSettings on CSettings {
   String get stringValue {
     String? x = settings.read(toString()) as String?;
     if (x == null) {
-      throw UnimplementedError("${toString()} not found.");
+      throw UnimplementedException("${toString()} not found.");
     } else {
       return x;
     }
@@ -29,7 +29,7 @@ extension CXSettings on CSettings {
   bool get boolValue {
     bool? x = settings.read(toString()) as bool?;
     if (x == null) {
-      throw UnimplementedError("${toString()} not found.");
+      throw UnimplementedException("${toString()} not found.");
     } else {
       return x;
     }
@@ -42,7 +42,7 @@ extension CXSettings on CSettings {
   int get intValue {
     int? x = settings.read(toString()) as int?;
     if (x == null) {
-      throw UnimplementedError("${toString()} not found.");
+      throw UnimplementedException("${toString()} not found.");
     } else {
       return x;
     }
@@ -55,7 +55,7 @@ extension CXSettings on CSettings {
   List<T> listValue<T>() {
     String? jsonString = settings.read(toString()) as String?;
     if (jsonString == null) {
-      throw UnimplementedError("${toString()} not found.");
+      throw UnimplementedException("${toString()} not found.");
     } else {
       List<dynamic> jsonList = json.decode(jsonString);
       return jsonList.cast<T>();
@@ -67,33 +67,24 @@ extension CXSettings on CSettings {
     await settings.write(toString(), jsonString);
   }
 
-  Serializable serializableValue() {
-    String? jsonString = settings.read(toString()) as String?;
-    if (jsonString == null) {
-      throw UnimplementedError("${toString()} not found.");
-    } else {
-      Map<String, dynamic> jsonMap = json.decode(jsonString);
-      return Serializable.fromJson(jsonMap);
-    }
-  }
-
-  Future<void> setSerializableValue(Serializable value) async {
-    String jsonString = json.encode(value);
-    await settings.write(toString(), jsonString);
-  }
-
   Map<String, String> stringMapValue() {
     String? jsonString = settings.read(toString()) as String?;
     if (jsonString == null) {
-      throw UnimplementedError("${toString()} not found.");
+      throw UnimplementedException("${toString()} not found.");
     } else {
       return json.decode(jsonString) as Map<String, String>;
     }
   }
+
+  Future<void> setStringMap(Map<String, String> value) async {
+    String jsonString = json.encode(value);
+    await settings.write(toString(), jsonString);
+  }
 }
 
-abstract class Serializable {
-  Map<String, dynamic> toJson();
-  factory Serializable.fromJson(Map<String, dynamic> json) =>
-      throw UnimplementedError("Needs to override fromJson");
+abstract class SerialObject {
+  SerialObject();
+  Map<String, String> toJson();
+  factory SerialObject.fromJson(Map<String, String> json) =>
+      throw UnimplementedException("Needs to override fromJson");
 }
