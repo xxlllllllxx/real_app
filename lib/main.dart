@@ -3,15 +3,18 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:real_app/features/cd_router.dart';
 import 'package:real_app/helpers/d_strings.dart';
 import 'package:real_app/helpers/d_widget.dart';
-import 'package:real_app/r_local_storage.dart';
+import 'package:real_app/helpers/f_app_state.dart';
+import 'package:real_app/helpers/r_local_storage.dart';
 import 'package:real_app/helpers/r_helper.dart';
-import 'package:real_app/r_modules.dart';
+import 'package:real_app/helpers/r_modules.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerHelpers(locator);
   await registerModules(locator);
   HydratedBloc.storage = await loadStorage(locator);
+
+  onAppLoadedParallel();
   runApp(const MainApp());
 }
 
@@ -30,7 +33,10 @@ class MainApp extends StatelessWidget {
         }
         return LayoutBuilder(
           builder: (context, constraints) {
-            return child;
+            return Scaffold(
+              appBar: null,
+              body: child,
+            );
           },
         );
       },

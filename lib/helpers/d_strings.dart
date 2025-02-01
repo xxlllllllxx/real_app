@@ -6,5 +6,8 @@ const String s_application_name = "__APP_NAME__";
 enum CWidgets {
   cew_main,
 
+  cew_app_connection_state,
+
   cew_bundy,
+  cew_app_connection_state_input,
 }

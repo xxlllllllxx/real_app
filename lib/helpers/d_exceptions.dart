@@ -67,3 +67,5 @@ class UnimplementedException implements Exception {
     return "UnimplementedException: $message${module != null ? '\n\tmodule: [$module]' : ''}";
   }
 }
+
+class SafeException implements Exception {}
