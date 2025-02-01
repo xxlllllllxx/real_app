@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:real_app/helpers/c_modules.dart';
 import 'package:real_app/features/modules/bundy/a_bundy.dart';
 import 'package:real_app/features/modules/bundy/p_bundy.dart';
-import 'package:real_app/helpers/d_strings.dart';
+import 'package:real_app/helpers/d_constants.dart';
 
 class BundyModule extends Modules {
   @override

@@ -3,7 +3,7 @@ import 'package:real_app/features/modules/app/a_app.dart';
 import 'package:real_app/features/modules/app/p_app.dart';
 import 'package:real_app/helpers/c_modules.dart';
 import 'package:real_app/helpers/d_exceptions.dart';
-import 'package:real_app/helpers/d_strings.dart';
+import 'package:real_app/helpers/d_constants.dart';
 
 class AppModule extends Modules {
   AppModule(super.module);

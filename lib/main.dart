@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:real_app/features/cd_router.dart';
-import 'package:real_app/helpers/d_strings.dart';
+import 'package:real_app/helpers/d_constants.dart';
 import 'package:real_app/helpers/d_widget.dart';
 import 'package:real_app/helpers/f_app_state.dart';
-import 'package:real_app/helpers/r_local_storage.dart';
 import 'package:real_app/helpers/r_helper.dart';
 import 'package:real_app/helpers/r_modules.dart';
 
@@ -12,7 +10,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerHelpers(locator);
   await registerModules(locator);
-  HydratedBloc.storage = await loadStorage(locator);
 
   onAppLoadedParallel();
   runApp(const MainApp());
@@ -26,8 +23,9 @@ class MainApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: MainRouter.router,
-      title: s_application_name,
+      title: c_application_name,
       builder: (context, child) {
+        print("BUILT");
         if (child == null) {
           return cw_progress;
         }

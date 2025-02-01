@@ -1,10 +1,6 @@
 part of './r_settings.dart';
 
 enum CSettings {
-  databaseName,
-  databasePath,
-  databaseLink,
-
   backendLink,
   backendIsSecure,
 

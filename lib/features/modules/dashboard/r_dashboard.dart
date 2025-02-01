@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:real_app/helpers/c_modules.dart';
 import 'package:real_app/features/modules/dashboard/p_dashboard.dart';
-import 'package:real_app/helpers/d_strings.dart';
+import 'package:real_app/helpers/d_constants.dart';
 
 class DashboardModule extends Modules {
   @override
