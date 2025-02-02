@@ -4,24 +4,22 @@ import 'package:real_app/features/modules/app/p_app.dart';
 import 'package:real_app/helpers/c_modules.dart';
 import 'package:real_app/helpers/d_exceptions.dart';
 import 'package:real_app/helpers/d_constants.dart';
+import 'package:real_app/helpers/r_helper.dart';
 
 class AppModule extends Modules {
-  AppModule(super.module);
+  AppModule();
   @override
   void registerDependencies() {
-    module.registerLazySingleton(() => AppApi());
+    locator.registerLazySingleton(() => AppApi());
   }
 
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   BuildContext get appContext =>
-      navigatorKey.currentContext ?? (throw SafeException());
+      navigatorKey.currentContext ?? (throw ApplicationException("App context is empty."));
 
   @override
   String get route => "/app";
-
-  @override
-  AppApi get api => module<AppApi>();
 
   @override
   Map<CWidgets, Widget> get ui => {
@@ -30,10 +28,13 @@ class AppModule extends Modules {
       };
 
   Future<void> onStartUp() async {
-    api.checkBackendConnection().then((e) => {
-          if (!e && (appContext.mounted)) {openBackendInputPopup()},
-        });
-    return;
+    // try {
+      await locator<AppApi>().checkBackendConnection();
+    // } on BackendException catch (_) {
+    //   if (appContext.mounted) {
+    //     openBackendInputPopup();
+    //   }
+    // }
   }
 
   void openBackendInputPopup() {

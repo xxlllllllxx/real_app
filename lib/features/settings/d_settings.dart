@@ -1,14 +1,23 @@
 part of './r_settings.dart';
 
 enum CSettings {
-  backendLink,
   backendIsSecure,
 
   serverLink,
   serverHeaders,
+
+  selectedTheme,
 }
 
 extension CXSettings on CSettings {
+  bool get exists {
+    return settings.read(toString()) != null;
+  }
+
+  bool get notExists {
+    return settings.read(toString()) == null;
+  }
+
   String get stringValue {
     String? x = settings.read(toString()) as String?;
     if (x == null) {
@@ -68,7 +77,8 @@ extension CXSettings on CSettings {
     if (jsonString == null) {
       throw UnimplementedException("${toString()} not found.");
     } else {
-      return json.decode(jsonString) as Map<String, String>;
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+      return jsonMap.map((key, value) => MapEntry(key, value.toString()));
     }
   }
 

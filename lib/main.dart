@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:real_app/features/cd_router.dart';
+import 'package:real_app/features/modules/app/r_app.dart';
+import 'package:real_app/features/modules/themes/r_themes.dart';
 import 'package:real_app/helpers/d_constants.dart';
-import 'package:real_app/helpers/d_widget.dart';
 import 'package:real_app/helpers/f_app_state.dart';
 import 'package:real_app/helpers/r_helper.dart';
 import 'package:real_app/helpers/r_modules.dart';
@@ -24,8 +25,8 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: MainRouter.router,
       title: c_application_name,
+      theme: locator<ThemesModule>().theme,
       builder: (context, child) {
-        print("BUILT");
         if (child == null) {
           return cw_progress;
         }

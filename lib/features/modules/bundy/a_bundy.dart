@@ -7,10 +7,14 @@ class BundyApi extends ApiBase {
 
   Future<Bundy> postBundy() async {
     final response = await post(
-      endpoint: "/bundy",
+      endpoint: "/",
       params: {},
     );
     validateResponse(response);
     return response.body.toObject<Bundy>();
+  }
+
+  Future<void> refresh() {
+    return post(endpoint: "/refresh", params: {});
   }
 }

@@ -6,7 +6,7 @@ import 'package:real_app/helpers/d_constants.dart';
 class DashboardModule extends Modules {
   @override
   String get route => "/";
-  DashboardModule(super.module);
+  DashboardModule();
 
   @override
   void registerDependencies() {}

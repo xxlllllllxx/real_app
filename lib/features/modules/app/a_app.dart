@@ -3,8 +3,7 @@ import 'package:real_app/helpers/a_http.dart';
 class AppApi extends ApiBase {
   List<String> access = [];
 
-  @override
-  String get path => "/app";
+  String path = "/app";
 
   Future<bool> checkBackendConnection() async {
     var response = await post(params: {});

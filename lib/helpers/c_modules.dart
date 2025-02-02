@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:real_app/helpers/a_http.dart';
-import 'package:real_app/helpers/d_exceptions.dart';
 import 'package:real_app/helpers/d_constants.dart';
 
 abstract class Modules {
-  final GetIt module;
 
-  Modules(this.module) {
+  Modules() {
     registerDependencies();
   }
 
   String get route;
-  ApiBase get api => throw UnimplementedException("In c_modules");
 
   Map<CWidgets, Widget> get ui;
 

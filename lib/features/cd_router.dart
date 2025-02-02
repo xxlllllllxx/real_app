@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:real_app/features/modules/app/r_app.dart';
 import 'package:real_app/helpers/c_modules.dart';
 import 'package:real_app/features/modules/dashboard/r_dashboard.dart';
 import 'package:real_app/helpers/d_constants.dart';
@@ -18,6 +19,7 @@ class MainRouter {
   ];
 
   static get router => GoRouter(
+      navigatorKey: locator<AppModule>().navigatorKey,
       routes: modules
           .map(
             (e) => GoRoute(

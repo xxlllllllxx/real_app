@@ -13,19 +13,27 @@ GetIt locator = GetIt.instance;
 
 Future<void> registerHelpers(GetIt locator) async {
   Bloc.observer = const AppBlocObserver();
-  ErrorWidget.builder = (FlutterErrorDetails details) {
-    if (details.exception is ApplicationException) {
-      return const Center(child: Text(""));
+
+  FlutterError.onError = (FlutterErrorDetails details) {
+    FlutterError.dumpErrorToConsole(details);
+    if (details.exception is ShowDialogException) {
+      (details.exception as ShowDialogException).showAppDialog();
     }
-    return const Center(child: Text("Something went wrong!"));
   };
 
-  HydratedBloc.storage = await loadStorage(locator);
-  if (CSettings.backendLink.stringValue.isEmpty) {
-    await CSettings.backendLink.setString("$c_temp_host:$c_temp_port");
+  HydratedStorage storage = await loadStorage(locator);
+  locator.registerSingleton<HydratedStorage>(storage);
+
+  HydratedBloc.storage = locator<HydratedStorage>();
+
+  if (CSettings.serverLink.notExists) {
+    await CSettings.serverLink.setString("$c_temp_host:$c_temp_port");
   }
-  if (CSettings.backendIsSecure.boolValue) {
+  if (CSettings.backendIsSecure.notExists) {
     await CSettings.backendIsSecure.setBool(c_temp_is_secure);
+  }
+  if (CSettings.serverHeaders.notExists) {
+    await CSettings.serverHeaders.setStringMap(c_seerver_headers);
   }
 
   return;
