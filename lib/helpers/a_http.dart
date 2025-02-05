@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:real_app/features/settings/r_settings.dart';
-import 'package:real_app/helpers/d_exceptions.dart';
+import 'package:real_app/helpers/a_exceptions.dart';
 
 class ApiBase {
   Uri getBackendUri(String endpoint, {Map<String, String>? params}) {

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:real_app/helpers/d_exceptions.dart';
+import 'package:real_app/helpers/a_exceptions.dart';
 import 'package:real_app/helpers/r_helper.dart';
 
 part './d_settings.dart';

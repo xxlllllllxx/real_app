@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:real_app/features/modules/app/r_app.dart';
+import 'package:real_app/app/r_app.dart';
 import 'package:real_app/helpers/d_constants.dart';
 import 'package:real_app/helpers/r_helper.dart';
 

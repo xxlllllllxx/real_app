@@ -13,7 +13,7 @@ abstract class Modules {
 
   void registerDependencies();
 
-  Widget getUI(CWidgets x, BuildContext context) {
-    return ui[x] ?? const Placeholder();
+  Widget getUI(CWidgets x, {or = const SizedBox()}) {
+    return ui[x] ?? debugWidget ?? or;
   }
 }

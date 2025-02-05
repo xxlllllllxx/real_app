@@ -1,3 +1,4 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_app/helpers/a_http.dart';
 
 class AppApi extends ApiBase {
@@ -12,4 +13,17 @@ class AppApi extends ApiBase {
     }
     return false;
   }
+}
+
+class AppCubit extends Cubit<AppState> {
+  AppCubit(super.initialState);
+
+  void restart() {
+    emit(AppState.themeChanged);
+  }
+}
+
+enum AppState {
+  started,
+  themeChanged,
 }

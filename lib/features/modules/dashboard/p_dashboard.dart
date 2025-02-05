@@ -12,7 +12,7 @@ class DashbordUI extends StatelessWidget {
     return Column(
       children: [
         const Text("DASHBOARD"),
-        locator<BundyModule>().getUI(CWidgets.cew_bundy, context),
+        locator<BundyModule>().getUI(CWidgets.cew_bundy),
       ],
     );
   }
