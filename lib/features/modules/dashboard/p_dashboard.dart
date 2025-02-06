@@ -1,14 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:real_app/features/modules/bundy/r_bundy.dart';
-import 'package:real_app/helpers/d_constants.dart';
-import 'package:real_app/helpers/r_helper.dart';
-
+part of 'r_dashboard.dart';
 class DashbordUI extends StatelessWidget {
   const DashbordUI({super.key});
 
   @override
   Widget build(BuildContext context) {
-    print("DASHBOARD");
     return Column(
       children: [
         const Text("DASHBOARD"),

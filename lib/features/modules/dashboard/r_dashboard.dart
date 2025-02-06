@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:real_app/features/modules/bundy/r_bundy.dart';
 import 'package:real_app/helpers/a_modules.dart';
-import 'package:real_app/features/modules/dashboard/p_dashboard.dart';
 import 'package:real_app/helpers/d_constants.dart';
+import 'package:real_app/helpers/r_helper.dart';
+
+part 'p_dashboard.dart';
 
 class DashboardModule extends Modules {
   @override

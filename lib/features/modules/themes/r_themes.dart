@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:real_app/app/a_app.dart';
 import 'package:real_app/app/r_app.dart';
 import 'package:real_app/features/settings/r_settings.dart';
 import 'package:real_app/helpers/a_modules.dart';

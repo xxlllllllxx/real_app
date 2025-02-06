@@ -1,4 +1,4 @@
-import 'package:real_app/helpers/a_http.dart';
+part of 'r_auth.dart';
 
 class AuthApi extends ApiBase {
   

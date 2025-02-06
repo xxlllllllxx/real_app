@@ -1,5 +1,4 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_app/helpers/a_http.dart';
+part of 'r_app.dart';
 
 class AppApi extends ApiBase {
   List<String> access = [];

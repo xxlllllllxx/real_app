@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:real_app/features/modules/auth/a_auth.dart';
-import 'package:real_app/features/modules/auth/p_auth.dart';
+import 'package:real_app/helpers/a_http.dart';
 import 'package:real_app/helpers/a_modules.dart';
 import 'package:real_app/helpers/d_constants.dart';
 import 'package:real_app/helpers/r_helper.dart';
+import 'package:go_router/go_router.dart';
+import 'package:real_app/features/modules/themes/r_themes.dart';
+import 'package:real_app/features/settings/r_settings.dart';
+
+part 'a_auth.dart';
+part 'p_auth.dart';
 
 class AuthModule extends Modules {
   bool authenticated = false;

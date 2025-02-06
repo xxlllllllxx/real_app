@@ -1,7 +1,4 @@
-import 'package:real_app/helpers/a_http.dart';
-import 'package:real_app/features/modules/bundy/d_bundy.dart';
-import 'package:real_app/helpers/r_helper.dart';
-
+part of 'r_bundy.dart';
 class BundyApi extends ApiBase {
   BundyApi();
 

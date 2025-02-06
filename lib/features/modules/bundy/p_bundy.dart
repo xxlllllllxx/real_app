@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:real_app/features/modules/bundy/r_bundy.dart';
-import 'package:real_app/helpers/r_helper.dart';
-
+part of 'r_bundy.dart';
 class BundyUI extends StatelessWidget {
   const BundyUI({super.key});
 

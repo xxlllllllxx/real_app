@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:real_app/features/a_router.dart';
-import 'package:real_app/app/a_app.dart';
 import 'package:real_app/app/r_app.dart';
 // import 'package:real_app/features/modules/app/r_app.dart';
 import 'package:real_app/features/modules/themes/r_themes.dart';
