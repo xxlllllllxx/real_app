@@ -1,13 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:real_app/helpers/a_modules.dart';
-import 'package:real_app/helpers/a_exceptions.dart';
-import 'package:real_app/helpers/d_constants.dart';
 import 'package:real_app/helpers/r_helper.dart';
-import 'package:go_router/go_router.dart';
 import 'package:real_app/features/modules/themes/r_themes.dart';
-import 'package:real_app/features/settings/r_settings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_app/helpers/a_http.dart';
 
 part 'a_app.dart';
 part 'p_app.dart';
@@ -16,6 +12,7 @@ class AppModule extends Modules {
   AppModule();
 
   AppCubit get appCubit => locator<AppCubit>();
+  AppApi get appApi => locator<AppApi>();
   @override
   void registerDependencies() {
     locator.registerLazySingleton(() => AppApi());
@@ -29,7 +26,7 @@ class AppModule extends Modules {
       (throw ApplicationException("App context is empty."));
 
   @override
-  String get route => "/";
+  String get route => BackendPaths.app;
 
   @override
   Map<CWidgets, Widget> get ui => {
@@ -43,5 +40,29 @@ class AppModule extends Modules {
       return true;
     }
     return false;
+  }
+
+  Future<void> checkBackendConnection(_) async {
+    try {
+      bool isConnected = await appApi.checkBackendConnection();
+      if (isConnected) {
+        return;
+      }
+      throw ApplicationException("Something went wrong!", module: "App Module");
+    } catch (_) {
+      if (appContext.mounted) {
+        await showDialog(
+          context: appContext,
+          builder: (_) =>
+              ui[CWidgets.cew_app_connection_state_input] ?? cw_progress,
+        ).then(checkBackendConnection);
+      }
+    }
+  }
+
+  void start() {
+    if (appCubit.state == AppState.started) {
+      checkBackendConnection(false);
+    }
   }
 }

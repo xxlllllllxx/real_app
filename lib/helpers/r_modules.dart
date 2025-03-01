@@ -1,9 +1,4 @@
-import 'package:get_it/get_it.dart';
-import 'package:real_app/app/r_app.dart';
-import 'package:real_app/features/modules/auth/r_auth.dart';
-import 'package:real_app/features/modules/bundy/r_bundy.dart';
-import 'package:real_app/features/modules/dashboard/r_dashboard.dart';
-import 'package:real_app/features/modules/themes/r_themes.dart';
+part of 'r_helper.dart';
 
 Future<void> registerModules(GetIt locator) async {
   locator.registerLazySingleton(() => AppModule());

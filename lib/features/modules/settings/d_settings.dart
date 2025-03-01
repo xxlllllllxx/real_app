@@ -1,4 +1,4 @@
-part of './r_settings.dart';
+part of 'r_settings.dart';
 
 enum CSettings {
   backendIsSecure,
@@ -8,6 +8,13 @@ enum CSettings {
 
   selectedTheme,
 }
+
+Map<CSettings, dynamic> defaultSettings = {
+  CSettings.backendIsSecure: c_temp_is_secure,
+  CSettings.serverLink: c_temp_server_link,
+  CSettings.serverHeaders: c_temp_headers,
+  CSettings.selectedTheme: c_temp_selected_theme,
+};
 
 extension CXSettings on CSettings {
   bool get exists {
@@ -21,7 +28,8 @@ extension CXSettings on CSettings {
   String get stringValue {
     String? x = settings.read(toString()) as String?;
     if (x == null) {
-      throw UnimplementedException("${toString()} not found.");
+      return defaultSettings[this] ??
+          UnimplementedException("${toString()} not found.");
     } else {
       return x;
     }
@@ -34,7 +42,8 @@ extension CXSettings on CSettings {
   bool get boolValue {
     bool? x = settings.read(toString()) as bool?;
     if (x == null) {
-      throw UnimplementedException("${toString()} not found.");
+      return defaultSettings[this] ??
+          UnimplementedException("${toString()} not found.");
     } else {
       return x;
     }
@@ -47,7 +56,8 @@ extension CXSettings on CSettings {
   int get intValue {
     int? x = settings.read(toString()) as int?;
     if (x == null) {
-      throw UnimplementedException("${toString()} not found.");
+      return defaultSettings[this] ??
+          UnimplementedException("${toString()} not found.");
     } else {
       return x;
     }
@@ -60,7 +70,8 @@ extension CXSettings on CSettings {
   List<T> listValue<T>() {
     String? jsonString = settings.read(toString()) as String?;
     if (jsonString == null) {
-      throw UnimplementedException("${toString()} not found.");
+      return defaultSettings[this] ??
+          UnimplementedException("${toString()} not found.");
     } else {
       List<dynamic> jsonList = json.decode(jsonString);
       return jsonList.cast<T>();
@@ -75,7 +86,8 @@ extension CXSettings on CSettings {
   Map<String, String> stringMapValue() {
     String? jsonString = settings.read(toString()) as String?;
     if (jsonString == null) {
-      throw UnimplementedException("${toString()} not found.");
+      return defaultSettings[this] ??
+          UnimplementedException("${toString()} not found.");
     } else {
       Map<String, dynamic> jsonMap = json.decode(jsonString);
       return jsonMap.map((key, value) => MapEntry(key, value.toString()));
@@ -86,11 +98,4 @@ extension CXSettings on CSettings {
     String jsonString = json.encode(value);
     await settings.write(toString(), jsonString);
   }
-}
-
-abstract class SerialObject {
-  SerialObject();
-  Map<String, String> toJson();
-  factory SerialObject.fromJson(Map<String, String> json) =>
-      throw UnimplementedException("Needs to override fromJson");
 }

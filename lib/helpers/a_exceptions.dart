@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:real_app/app/r_app.dart';
-import 'package:real_app/helpers/d_constants.dart';
-import 'package:real_app/helpers/r_helper.dart';
+part of 'r_helper.dart';
 
 class ApplicationException implements Exception, ShowDialogException {
   final String message;

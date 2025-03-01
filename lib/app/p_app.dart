@@ -14,7 +14,19 @@ class AppConnectionStateUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Connection INPUT");
+    return Column(
+      
+      children: [
+      Card(
+        child: Container(
+          height: 400,
+          width: 300,
+          alignment: Alignment.center,
+          child: const Text("Connection Input!"),
+        ),
+      ),
+    ],
+    );
   }
 }
 
@@ -25,23 +37,12 @@ class AppSplash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: locator<ThemesModule>().splashColor,
-      child: Column(
+      child: const Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text("This is the splashscreen"),
-          ElevatedButton.icon(
-              onPressed: () async {
-                String s = CSettings.selectedTheme.stringValue;
-                print("__debug s: ${s}");
-                await locator<ThemesModule>().setTheme((s == CThemes.dark.toString())
-                    ? CThemes.light
-                    : CThemes.dark);
-                context.go("/login");
-              },
-              icon: Icon(Icons.abc),
-              label: const Text("Change Theme"))
         ],
       ),
     );

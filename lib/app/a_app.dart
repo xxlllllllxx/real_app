@@ -6,16 +6,22 @@ class AppApi extends ApiBase {
   String path = "/app";
 
   Future<bool> checkBackendConnection() async {
-    var response = await post(params: {});
-    if (response.statusCode == 200) {
-      return true;
+    try {
+      var response = await post(params: {});
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (_) {
+      return false;
     }
-    return false;
   }
 }
 
 class AppCubit extends Cubit<AppState> {
-  AppCubit(super.initialState);
+  AppCubit(
+    super.initialState,
+  );
 
   void restart() {
     emit(AppState.themeChanged);

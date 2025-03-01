@@ -1,4 +1,4 @@
-import 'package:hydrated_bloc/hydrated_bloc.dart';
+part of 'r_helper.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();

@@ -1,10 +1,4 @@
-import 'package:go_router/go_router.dart';
-import 'package:real_app/app/r_app.dart';
-import 'package:real_app/features/modules/auth/r_auth.dart';
-import 'package:real_app/helpers/a_modules.dart';
-import 'package:real_app/features/modules/dashboard/r_dashboard.dart';
-import 'package:real_app/helpers/d_constants.dart';
-import 'package:real_app/helpers/r_helper.dart';
+part of 'r_helper.dart';
 
 class RouterModule {
   final Modules module;

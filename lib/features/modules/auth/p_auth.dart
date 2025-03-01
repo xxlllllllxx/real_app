@@ -10,16 +10,11 @@ class LoginUI extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ElevatedButton.icon(
-              onPressed: () async {
-                String s = CSettings.selectedTheme.stringValue;
-                await locator<ThemesModule>().setTheme((s == CThemes.dark.toString())
-                    ? CThemes.light
-                    : CThemes.dark);
-                context.go("/");
-              },
-              icon: Icon(Icons.abc),
-              label: const Text("Change Theme"))
+        Text(c_text_welcome_user),
+        Text(c_text_username),
+        Text(c_text_password),
+        Text(c_text_login),
+        
       ],
     );
   }

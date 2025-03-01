@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:real_app/helpers/d_constants.dart';
-
+part of 'r_helper.dart';
 abstract class Modules {
 
   Modules() {
@@ -14,6 +12,6 @@ abstract class Modules {
   void registerDependencies();
 
   Widget getUI(CWidgets x, {or = const SizedBox()}) {
-    return ui[x] ?? debugWidget ?? or;
+    return ui[x] ?? or;
   }
 }

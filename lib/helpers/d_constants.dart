@@ -1,13 +1,14 @@
 // ignore_for_file: constant_identifier_names
-import 'package:flutter/material.dart';
+part of 'r_helper.dart';
 
 const String c_application_name = "__APP_NAME__"; // set to name
-Widget? debugWidget = const Text("__DEBUG_WIDGET__"); // set to null
 
-const String c_temp_host = "localhost";
-const int c_temp_port = 80;
+const String c_temp_server_link = "localhost:8080";
 const bool c_temp_is_secure = false;
-const Map<String, String> c_seerver_headers = {};
+const Map<String, String> c_temp_headers = {};
+const String c_temp_selected_theme = 'light';
+const String c_themes_light = 'light';
+const String c_themes_dark = 'dark';
 
 const String c_ok = "OK";
 
@@ -22,14 +23,12 @@ enum CWidgets {
   cew_button_select_theme,
 }
 
-enum CThemes {
-  light,
-  dark,
-}
-
 class BackendPaths {
+  static const String app = "/";
+  static const String auth = "/login";
   static const String dashboard = "/dashboard";
-  static const String app = "/app";
+  static const String settings = "/settings";
+  static const String themes = "/themes";
   static const String bundy = "/bundy";
 }
 

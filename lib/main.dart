@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:real_app/features/a_router.dart';
 import 'package:real_app/app/r_app.dart';
 // import 'package:real_app/features/modules/app/r_app.dart';
 import 'package:real_app/features/modules/themes/r_themes.dart';
-import 'package:real_app/helpers/d_constants.dart';
 import 'package:real_app/helpers/r_helper.dart';
-import 'package:real_app/helpers/r_modules.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerHelpers(locator);
   await registerModules(locator);
+
 
   runApp(BlocProvider(
     create: (_) => locator<AppCubit>(),
@@ -35,8 +33,8 @@ class MainApp extends StatelessWidget {
         }
         return LayoutBuilder(
           builder: (context, constraints) {
+            locator<AppModule>().start();
             return MaterialApp(
-              
               theme: locator<ThemesModule>().theme,
               home: Scaffold(
                 appBar: null,
