@@ -15,17 +15,16 @@ class AppConnectionStateUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      
       children: [
-      Card(
-        child: Container(
-          height: 400,
-          width: 300,
-          alignment: Alignment.center,
-          child: const Text("Connection Input!"),
+        Card(
+          child: Container(
+            height: 400,
+            width: 300,
+            alignment: Alignment.center,
+            child: const Text("Connection Input!"),
+          ),
         ),
-      ),
-    ],
+      ],
     );
   }
 }
@@ -42,7 +41,7 @@ class AppSplash extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text("This is the splashscreen"),
+          const Text("This is the splashscreen"),
         ],
       ),
     );

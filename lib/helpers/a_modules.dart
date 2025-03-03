@@ -1,5 +1,17 @@
 part of 'r_helper.dart';
+
 abstract class Modules {
+  Future<bool> beforeInitAsync() async {
+    return true;
+  }
+  
+  Future<void> duringInitAsync() async {
+    return;
+  }
+  
+  Future<bool> afterInitAsync() async {
+    return true;
+  }
 
   Modules() {
     registerDependencies();

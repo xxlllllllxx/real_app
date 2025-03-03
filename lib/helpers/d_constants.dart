@@ -3,7 +3,7 @@ part of 'r_helper.dart';
 
 const String c_application_name = "__APP_NAME__"; // set to name
 
-const String c_temp_server_link = "localhost:8080";
+const String c_temp_server_link = "localhost:8889";
 const bool c_temp_is_secure = false;
 const Map<String, String> c_temp_headers = {};
 const String c_temp_selected_theme = 'light';
@@ -14,6 +14,7 @@ const String c_ok = "OK";
 
 enum CWidgets {
   cew_main,
+  cew_init_failed,
 
   cew_app_connection_state,
 

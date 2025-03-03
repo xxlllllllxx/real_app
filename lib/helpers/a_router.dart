@@ -22,7 +22,22 @@ class MainRouter {
             (e) => GoRoute(
               path: e.routerPath,
               builder: (context, state) {
-                return e.module.getUI(CWidgets.cew_main);
+                return FutureBuilder(
+                  future: e.module.beforeInitAsync(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data ?? true) {
+                        e.module.duringInitAsync().then((_) {
+                          e.module.afterInitAsync();
+                        });
+                        return e.module.getUI(CWidgets.cew_main);
+                      } else {
+                        return e.module.getUI(CWidgets.cew_init_failed);
+                      }
+                    }
+                    return cw_progress;
+                  },
+                );
               },
             ),
           )

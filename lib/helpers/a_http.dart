@@ -2,9 +2,11 @@ part of 'r_helper.dart';
 
 class ApiBase {
   Uri getBackendUri(String endpoint, {Map<String, String>? params}) {
-    return CSettings.backendIsSecure.boolValue
-        ? Uri.https(CSettings.serverLink.stringValue, endpoint, params ?? {})
-        : Uri.http(CSettings.serverLink.stringValue, endpoint, params ?? {});
+    return LocalStorage.BACKEND_IS_SECURE.boolValue
+        ? Uri.https(
+            LocalStorage.SERVER_LINK.stringValue, endpoint, params ?? {})
+        : Uri.http(
+            LocalStorage.SERVER_LINK.stringValue, endpoint, params ?? {});
   }
 
   http.Response afterSend(http.Response response) {
@@ -15,7 +17,8 @@ class ApiBase {
     try {
       return await request;
     } on SocketException catch (e) {
-      throw BackendException("Connection refused", endpoint: e.address.toString());
+      throw BackendException("Connection failed",
+          endpoint: e.address.toString());
     }
   }
 
@@ -25,62 +28,89 @@ class ApiBase {
     } else if (response.statusCode == 401) {
       throw BackendException("Unauthorized");
     } else {
-      throw BackendException("Failed to load data", endpoint: response.request?.url.path, statusCode: response.statusCode, method: response.request?.method);
+      throw BackendException("Failed to load data",
+          endpoint: response.request?.url.path,
+          statusCode: response.statusCode,
+          method: response.request?.method);
     }
   }
 
   Future<http.Response> post({
     required Map<String, String> params,
     String endpoint = "/",
+    handleError = true,
+    Uri? completeUri,
   }) async {
     final request = http.post(
-      getBackendUri(endpoint),
-      headers: CSettings.serverHeaders.stringMapValue(),
+      completeUri ?? getBackendUri(endpoint),
+      headers: LocalStorage.SERVER_HEADERS.stringMapValue(),
       body: params,
     );
-    final response = await beforeSend(request);
-    validateResponse(response);
-    return afterSend(response);
+    if (handleError) {
+      final response = await beforeSend(request);
+      validateResponse(response);
+      return afterSend(response);
+    } else {
+      return request;
+    }
   }
 
   Future<http.Response> put({
     required Map<String, String> params,
     String endpoint = "/",
+    handleError = true,
+    Uri? completeUri,
   }) async {
     final request = http.put(
-      getBackendUri(endpoint),
-      headers: CSettings.serverHeaders.stringMapValue(),
+      completeUri ?? getBackendUri(endpoint),
+      headers: LocalStorage.SERVER_HEADERS.stringMapValue(),
       body: params,
     );
-    final response = await beforeSend(request);
-    validateResponse(response);
-    return afterSend(response);
+    if (handleError) {
+      final response = await beforeSend(request);
+      validateResponse(response);
+      return afterSend(response);
+    } else {
+      return request;
+    }
   }
 
   Future<http.Response> get({
     required Map<String, String> params,
     String endpoint = "/",
+    handleError = true,
+    Uri? completeUri,
   }) async {
     final request = http.get(
-      getBackendUri(endpoint, params: params),
-      headers: CSettings.serverHeaders.stringMapValue(),
+      completeUri ?? getBackendUri(endpoint, params: params),
+      headers: LocalStorage.SERVER_HEADERS.stringMapValue(),
     );
-    final response = await beforeSend(request);
-    validateResponse(response);
-    return afterSend(response);
+    if(handleError) {
+      final response = await beforeSend(request);
+      validateResponse(response);
+      return afterSend(response);
+    } else {
+      return request;
+    }
   }
 
   Future<http.Response> delete({
     required Map<String, String> params,
     String endpoint = "/",
+    handleError = false,
+    Uri? completeUri,
   }) async {
     final request = http.delete(
-      getBackendUri(endpoint),
-      headers: CSettings.serverHeaders.stringMapValue(),
+      completeUri ?? getBackendUri(endpoint),
+      headers: LocalStorage.SERVER_HEADERS.stringMapValue(),
       body: params,
     );
-    final response = await beforeSend(request);
-    validateResponse(response);
-    return afterSend(response);
+    if(handleError) {
+      final response = await beforeSend(request);
+      validateResponse(response);
+      return afterSend(response);
+    } else {
+      return request;
+    }
   }
 }

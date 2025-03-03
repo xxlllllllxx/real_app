@@ -12,8 +12,8 @@ class ThemesModule extends Modules {
   };
 
   ThemeData get theme {
-    return CSettings.selectedTheme.exists
-        ? themes[CSettings.selectedTheme.stringValue] ?? ThemeData.light()
+    return LocalStorage.SELECTED_THEME.exists
+        ? themes[LocalStorage.SELECTED_THEME.stringValue] ?? ThemeData.light()
         : themes[c_themes_dark] ?? ThemeData.light();
   }
 
@@ -33,7 +33,7 @@ class ThemesModule extends Modules {
       };
 
   Future<void> setTheme(String theme) async {
-    await CSettings.selectedTheme.setString(theme.toString());
+    await LocalStorage.SELECTED_THEME.setString(theme.toString());
     locator<AppModule>().appCubit.restart();
   }
 }

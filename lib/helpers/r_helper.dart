@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -16,6 +18,8 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 part 'a_bloc_observer.dart';
 part 'a_exceptions.dart';
 part 'a_http.dart';
@@ -25,30 +29,47 @@ part 'r_modules.dart';
 part 'a_router.dart';
 
 GetIt locator = GetIt.instance;
+bool hasErrorDialog = false;
+
+enum LocalStorage {
+  BACKEND_IS_SECURE,
+
+  SERVER_LINK,
+  SERVER_HEADERS,
+
+  SELECTED_THEME,
+
+  SESSION_TOKEN,
+}
 
 Future<void> registerHelpers(GetIt locator) async {
   Bloc.observer = const AppBlocObserver();
 
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
-    if (details.exception is ShowDialogException) {
-      (details.exception as ShowDialogException).showAppDialog();
+    if (details.exception is ShowDialogException && !hasErrorDialog) {
+      hasErrorDialog = true;
+      (details.exception as ShowDialogException)
+          .showAppDialog()
+          .then((_) => hasErrorDialog = false);
     }
   };
 
   HydratedStorage storage = await loadStorage(locator);
   locator.registerSingleton<HydratedStorage>(storage);
 
+  appStorage = await SharedPreferences.getInstance();
+
   HydratedBloc.storage = locator<HydratedStorage>();
 
-  if (CSettings.serverLink.notExists) {
-    await CSettings.serverLink.setString(c_temp_server_link);
+  if (LocalStorage.SERVER_LINK.notExists) {
+    await LocalStorage.SERVER_LINK.setString(c_temp_server_link);
   }
-  if (CSettings.backendIsSecure.notExists) {
-    await CSettings.backendIsSecure.setBool(c_temp_is_secure);
+  if (LocalStorage.BACKEND_IS_SECURE.notExists) {
+    await LocalStorage.BACKEND_IS_SECURE.setBool(c_temp_is_secure);
   }
-  if (CSettings.serverHeaders.notExists) {
-    await CSettings.serverHeaders.setStringMap(c_temp_headers);
+  if (LocalStorage.SERVER_HEADERS.notExists) {
+    await LocalStorage.SERVER_HEADERS.setStringMap(c_temp_headers);
   }
 
   return;
@@ -88,4 +109,88 @@ abstract class SerialObject {
   Map<String, String> toJson();
   factory SerialObject.fromJson(Map<String, String> json) =>
       throw UnimplementedException("Needs to override fromJson");
+}
+
+extension CXLocalStorage on LocalStorage {
+  bool get exists {
+    return appStorage.containsKey(toString());
+  }
+
+  bool get notExists {
+    return !appStorage.containsKey(toString());
+  }
+
+  String get stringValue {
+    String? x = appStorage.getString(toString());
+    if (x == null) {
+      return defaultSettings[this] ??
+          UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
+
+  Future<void> setString(String value) async {
+    await appStorage.setString(toString(), value);
+  }
+
+  bool get boolValue {
+    bool? x = appStorage.getBool(toString());
+    if (x == null) {
+      return defaultSettings[this] ??
+          UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
+
+  Future<void> setBool(bool value) async {
+    await appStorage.setBool(toString(), value);
+  }
+
+  int get intValue {
+    int? x = appStorage.getInt(toString());
+    if (x == null) {
+      return defaultSettings[this] ??
+          UnimplementedError("${toString()} not found.");
+    } else {
+      return x;
+    }
+  }
+
+  Future<void> setInt(int value) async {
+    await appStorage.setInt(toString(), value);
+  }
+
+  List<T> listValue<T>() {
+    String? jsonString = appStorage.getString(toString());
+    if (jsonString == null) {
+      return defaultSettings[this] ??
+          UnimplementedError("${toString()} not found.");
+    } else {
+      List<dynamic> jsonList = json.decode(jsonString);
+      return jsonList.cast<T>();
+    }
+  }
+
+  Future<void> setList<T>(List<T> value) async {
+    String jsonString = json.encode(value);
+    await appStorage.setString(toString(), jsonString);
+  }
+
+  Map<String, String> stringMapValue() {
+    String? jsonString = appStorage.getString(toString());
+    if (jsonString == null) {
+      return defaultSettings[this] ??
+          UnimplementedError("${toString()} not found.");
+    } else {
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+      return jsonMap.map((key, value) => MapEntry(key, value.toString()));
+    }
+  }
+
+  Future<void> setStringMap(Map<String, String> value) async {
+    String jsonString = json.encode(value);
+    await appStorage.setString(toString(), jsonString);
+  }
 }

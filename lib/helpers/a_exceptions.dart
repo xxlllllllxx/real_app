@@ -27,10 +27,10 @@ class ApplicationException implements Exception, ShowDialogException {
   }
 
   @override
-  void showAppDialog() {
+  Future<void> showAppDialog() async {
     final context = locator<AppModule>().appContext;
     if (context.mounted) {
-      showDialog(
+      await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -86,10 +86,10 @@ class BackendException implements Exception, ShowDialogException {
   }
 
   @override
-  void showAppDialog() {
+  Future<void> showAppDialog() async {
     final context = locator<AppModule>().appContext;
     if (context.mounted) {
-      showDialog(
+      await showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
@@ -134,5 +134,5 @@ class UnimplementedException implements Exception {
 }
 
 abstract class ShowDialogException {
-  void showAppDialog();
+  Future<void> showAppDialog();
 }

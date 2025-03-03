@@ -10,10 +10,10 @@ void main() async {
   await registerHelpers(locator);
   await registerModules(locator);
 
-
-  runApp(BlocProvider(
-    create: (_) => locator<AppCubit>(),
-    child: const MainApp(),
+  runApp(
+    BlocProvider(
+      create: (_) => locator<AppCubit>(),
+      child: const MainApp(),
     ),
   );
 }
@@ -27,19 +27,16 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: MainRouter.router,
       title: c_application_name,
+      theme: locator<ThemesModule>().theme,
       builder: (context, child) {
         if (child == null) {
           return cw_progress;
         }
         return LayoutBuilder(
           builder: (context, constraints) {
-            locator<AppModule>().start();
-            return MaterialApp(
-              theme: locator<ThemesModule>().theme,
-              home: Scaffold(
-                appBar: null,
-                body: child,
-              ),
+            return Scaffold(
+              appBar: null,
+              body: child,
             );
           },
         );
